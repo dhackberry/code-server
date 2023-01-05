@@ -26,11 +26,6 @@ RUN wget -q -O docker.tar.gz https://download.docker.com/linux/static/stable/x86
     sudo install docker/docker /usr/local/bin/ && \
     rm -rf docker*
 
-# AZURE
-RUN wget -q -O az.deb https://packages.microsoft.com/repos/azure-cli/pool/main/a/azure-cli/azure-cli_2.42.0-1~focal_all.deb && \
-    sudo dpkg -i az.deb && \
-    rm -f az.deb
-
 RUN kubectl completion bash | sudo tee /etc/bash_completion.d/kubectl > /dev/null && \
     helm completion bash | sudo tee /etc/bash_completion.d/helm > /dev/null && \
     tanzu completion bash | sudo tee /etc/bash_completion.d/tanzu > /dev/null && \
