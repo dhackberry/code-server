@@ -29,21 +29,6 @@ USER root
 RUN chmod +x /etc/profile.d/00-java.sh
 USER coder
 
-# Tanzu
-ENV TANZU_VERSION=0.25.0
-RUN wget -q https://github.com/vmware-tanzu/tanzu-framework/releases/download/v${TANZU_VERSION}/tanzu-framework-linux-amd64.tar.gz && \
-    tar xzvf tanzu-framework-linux-amd64.tar.gz && \
-    sudo install cli/core/v${TANZU_VERSION}/tanzu-core-linux_amd64 /usr/local/bin/tanzu && \
-    tanzu plugin install --local cli all && \
-    rm -fr tanzu-framework* cli
-
-ENV TANZU_APPS_CLI_PLUGIN_VERSION=0.9.0
-RUN wget -q https://github.com/vmware-tanzu/apps-cli-plugin/releases/download/v${TANZU_APPS_CLI_PLUGIN_VERSION}/tanzu-apps-plugin-linux-amd64-v${TANZU_APPS_CLI_PLUGIN_VERSION}.tar.gz && \
-    mkdir tanzu-apps-plugin && \
-    tar xzvf tanzu-apps-plugin-linux-amd64-v${TANZU_APPS_CLI_PLUGIN_VERSION}.tar.gz -C tanzu-apps-plugin && \
-    tanzu plugin install apps --local tanzu-apps-plugin --version v${TANZU_APPS_CLI_PLUGIN_VERSION} && \
-    rm -fr tanzu-apps-plugin*
-
 # Maven
 ENV MAVEN_VERSION=3.8.6
 RUN wget -q -O maven.tar.gz http://ftp.riken.jp/net/apache/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz && \
