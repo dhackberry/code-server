@@ -17,7 +17,6 @@ RUN sudo apt-get update && sudo apt-get install --no-install-recommends -y \
 ENV VSCODE_USER /home/coder/.local/share/code-server/User
 ENV VSCODE_EXTENSIONS /home/coder/.local/share/code-server/extensions
 
-RUN code-server --install-extension redhat.java
 RUN code-server --install-extension vscjava.vscode-java-debug
 RUN code-server --install-extension vscjava.vscode-java-test
 RUN code-server --install-extension vscjava.vscode-maven
