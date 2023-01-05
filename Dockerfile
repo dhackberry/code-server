@@ -17,17 +17,6 @@ RUN sudo apt-get update && sudo apt-get install --no-install-recommends -y \
 ENV VSCODE_USER /home/coder/.local/share/code-server/User
 ENV VSCODE_EXTENSIONS /home/coder/.local/share/code-server/extensions
 
-RUN code-server --install-extension vscjava.vscode-java-debug
-RUN code-server --install-extension vscjava.vscode-java-test
-RUN code-server --install-extension vscjava.vscode-maven
-RUN code-server --install-extension vscjava.vscode-java-dependency
-RUN code-server --install-extension pivotal.vscode-spring-boot
-RUN code-server --install-extension vscjava.vscode-spring-initializr
-RUN code-server --install-extension vscjava.vscode-spring-boot-dashboard
-RUN code-server --install-extension redhat.vscode-yaml
-RUN code-server --install-extension adashen.vscode-tomcat
-RUN code-server --install-extension dgileadi.java-decompiler
-
 # Liberica JDK
 RUN wget -q -O OpenJDK.tar.gz https://download.bell-sw.com/java/17.0.5+8/bellsoft-jdk17.0.5+8-linux-amd64.tar.gz && \
     tar xzf OpenJDK.tar.gz && \
