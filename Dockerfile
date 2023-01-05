@@ -25,5 +25,3 @@ RUN wget -q -O docker.tar.gz https://download.docker.com/linux/static/stable/x86
     tar xzf docker.tar.gz && \
     sudo install docker/docker /usr/local/bin/ && \
     rm -rf docker*
-
-RUN kubectl completion bash | sudo tee /etc/bash_completion.d/kubectl > /dev/null && \
