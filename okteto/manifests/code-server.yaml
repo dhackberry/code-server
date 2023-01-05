@@ -24,6 +24,6 @@ metadata:
 spec:
   containers:
   - name: code-server
-    image: okteto.dev/code-server:${OKTETO_GIT_COMMIT}
+    image: okteto.dev/code-server:latest
     ports:
     - containerPort: 8443
