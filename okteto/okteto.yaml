@@ -4,7 +4,7 @@ build:
     context: .
 deploy:
   # - okteto build -t okteto.dev/code-server:${OKTETO_GIT_COMMIT} .
-  - envsubst < secret.template.yaml > secret.yaml
-  - kubectl apply -k .
+  - envsubst < okteto/secret.template.yaml > okteto/secret.yaml
+  - kubectl apply -k ./okteto
   - kubectl apply -f okteto/manifests
 
