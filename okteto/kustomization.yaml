@@ -5,4 +5,4 @@ secretGenerator:
   files:
   - secret.yaml
 resources:
-- code-server.yaml
+- manifests/code-server.yaml
