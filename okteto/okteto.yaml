@@ -1,3 +1,7 @@
+build:
+  code-server:
+    image: okteto.dev/code-server:latest
+    context: .
 deploy:
-  - okteto build -t okteto.dev/code-server:${OKTETO_GIT_COMMIT} .
+  # - okteto build -t okteto.dev/code-server:${OKTETO_GIT_COMMIT} .
   - kubectl apply -f okteto/manifests
