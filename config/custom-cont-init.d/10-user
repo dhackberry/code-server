@@ -1,0 +1,15 @@
+#!/usr/bin/with-contenv bash
+
+DEDAULT_USER="$(id -un $PUID)"
+usermod -l $USER -d /home/$USER $DEDAULT_USER
+groupmod -n $USER $DEDAULT_USER
+echo "$USER ALL=(ALL) NOPASSWD: ALL" >| /etc/sudoers.d/default
+
+sed -i'.bak' "s/abc/$USER/g" /etc/s6-overlay/s6-rc.d/init-code-server/run
+sed -i'.bak' "s/abc/$USER/g" /etc/s6-overlay/s6-rc.d/svc-code-server/run
+sed -i'.bak' "s/abc/$USER/g" /run/s6/db/servicedirs/svc-code-server/run
+sed -i'.bak' "s/abc/$USER/g" /run/s6-rc:s6-rc-init:*/servicedirs/svc-code-server/run
+
+# chown $USER:$USER /app
+# chown $USER:$USER /config
+# chown $USER:$USER /defaults
