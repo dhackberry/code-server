@@ -93,5 +93,4 @@ RUN rm -f LICENSE README.md
 # RUN echo 'for f in /etc/profile.d/*.sh;do source $f;done' | sudo tee -a /home/coder/.bashrc > /dev/null
 # RUN rm -f /home/coder/.wget-hsts
 
-# ADD ./config/data /config/data/
-# ADD ./config/custom-cont-init.d/ /custom-cont-init.d/
+ADD ./config/User/settings.json /home/coder/.local/share/code-server/User/settings.json
