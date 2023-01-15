@@ -1,0 +1,4 @@
+{
+    // UI手動操作でないと設定が反映されない： https://github.com/coder/code-server/discussions/5644
+    "locale": "ja"
+}
