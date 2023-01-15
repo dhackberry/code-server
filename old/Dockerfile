@@ -1,10 +1,8 @@
-FROM codercom/code-server:latest
+FROM lscr.io/linuxserver/code-server:latest
 
 # Misc
 RUN sudo apt-get update && sudo apt-get install --no-install-recommends -y \
-    jq \
     gnupg2 \
-    curl \
     unzip \
     libarchive-tools \
     wget \
@@ -16,10 +14,10 @@ RUN sudo apt-get update && sudo apt-get install --no-install-recommends -y \
     && sudo rm -rf /var/lib/apt/lists/*
 
 ENV TZ Asia/Tokyo
-
-# Visual Studio Code Extentions
-ENV VSCODE_USER /home/coder/.local/share/code-server/User
-ENV VSCODE_EXTENSIONS /home/coder/.local/share/code-server/extensions
+# ENV VSCODE_USER /config/data/User/
+# ENV VSCODE_EXTENSIONS /config/extensions/
+# ENV PUID 1000
+# ENV PGID 1000
 
 # AZURE
 RUN curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
@@ -78,20 +76,16 @@ RUN wget -q -O yj https://github.com/sclevine/yj/releases/download/v5.1.0/yj-lin
     sudo install yj /usr/local/bin/ && \
     rm -f yj*
 
-RUN rm -f LICENSE README.md
+RUN /app/code-server/bin/code-server --extensions-dir /config/extensions --install-extension dracula-theme.theme-dracula
+RUN /app/code-server/bin/code-server --extensions-dir /config/extensions --install-extension MS-CEINTL.vscode-language-pack-ja
+RUN /app/code-server/bin/code-server --extensions-dir /config/extensions --install-extension vscode-icons-team.vscode-icons
+RUN /app/code-server/bin/code-server --extensions-dir /config/extensions --install-extension eamodio.gitlens
+RUN /app/code-server/bin/code-server --extensions-dir /config/extensions --install-extension humao.rest-client
 
-# RUN code-server --extensions-dir /config/extensions --install-extension dracula-theme.theme-dracula
-# RUN code-server --extensions-dir /config/extensions --install-extension MS-CEINTL.vscode-language-pack-ja
-# RUN code-server --extensions-dir /config/extensions --install-extension vscode-icons-team.vscode-icons
-# RUN code-server --extensions-dir /config/extensions --install-extension eamodio.gitlens
-# RUN code-server --extensions-dir /config/extensions --install-extension humao.rest-client
+ADD ./config/data /config/data/
+ADD ./config/custom-cont-init.d/ /custom-cont-init.d/
 
-# RUN sudo mkdir -p /home/eno/.bin && \
-#     echo "export PATH=\"\$HOME/.local/bin:\$PATH\"" | sudo tee -a /home/eno/.bashrc > /dev/null
-
-# RUN mkdir -p ${VSCODE_USER} && echo "{\"java.home\":\"$(dirname /opt/jdk-*/bin/)\",\"maven.terminal.useJavaHome\":true, \"maven.executable.path\":\"/opt/apache-maven-${MAVEN_VERSION}/bin/mvn\",\"spring-boot.ls.java.home\":\"$(dirname /opt/jdk-*/bin/)\",\"files.exclude\":{\"**/.classpath\":true,\"**/.project\":true,\"**/.settings\":true,\"**/.factorypath\":true},\"redhat.telemetry.enabled\":false,\"java.server.launchMode\": \"Standard\"}" | jq . > ${VSCODE_USER}/settings.json
-# RUN echo 'for f in /etc/profile.d/*.sh;do source $f;done' | sudo tee -a /home/coder/.bashrc > /dev/null
-# RUN rm -f /home/coder/.wget-hsts
-
-# ADD ./config/data /config/data/
-# ADD ./config/custom-cont-init.d/ /custom-cont-init.d/
+# RUN sed -i'.bak' "s/abc/\$USER/g" /etc/s6-overlay/s6-rc.d/init-adduser/run
+# RUN sed -i'.bak' "s/abc/\$USER/g" /etc/s6-overlay/s6-rc.d/init-code-server/run
+# RUN sed -i'.bak' "s/abc/\$USER/g" /etc/s6-overlay/s6-rc.d/svc-code-server/run
+# RUN sed -i'.bak' "s/abc/\$USER/g" /root/usr/local/bin/install-extension
