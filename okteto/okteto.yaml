@@ -1,11 +1,11 @@
-build:
-  code-server:
-    image: okteto.dev/code-server:${OKTETO_GIT_COMMIT}
-    context: .
+# build:
+#   code-server:
+#     image: okteto.dev/code-server:latest
+#     context: .
 deploy:
-  # - okteto build -t okteto.dev/code-server:${OKTETO_GIT_COMMIT} .
+  - okteto build -t okteto.dev/code-server:latest .
   # - envsubst < okteto/secret.template.env > okteto/secret.env
   # - kubectl apply -k ./okteto
-  - helm upgrade --install code-server helm-chart -f helm-chart/values.yaml --set image.repository=okteto.dev/code-server --set image.tag=${OKTETO_GIT_COMMIT}
+  - helm upgrade --install code-server helm-chart -f helm-chart/values.yaml --set image.repository=okteto.dev/code-server --set image.tag=latest
   # - kubectl apply -f okteto/manifests
 
