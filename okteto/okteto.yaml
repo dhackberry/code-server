@@ -4,7 +4,8 @@ build:
     context: .
 deploy:
   # - okteto build -t okteto.dev/code-server:${OKTETO_GIT_COMMIT} .
-  - envsubst < okteto/secret.template.env > okteto/secret.env
-  - kubectl apply -k ./okteto
+  # - envsubst < okteto/secret.template.env > okteto/secret.env
+  # - kubectl apply -k ./okteto
+  - helm upgrade --install code-server helm-chart -f helm-chart/values.yaml
   # - kubectl apply -f okteto/manifests
 
