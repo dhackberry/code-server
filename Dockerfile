@@ -80,17 +80,27 @@ RUN wget -q -O yj https://github.com/sclevine/yj/releases/download/v5.1.0/yj-lin
 
 RUN rm -f LICENSE README.md
 
-# RUN code-server --extensions-dir /config/extensions --install-extension dracula-theme.theme-dracula
-# RUN code-server --extensions-dir /config/extensions --install-extension MS-CEINTL.vscode-language-pack-ja
-# RUN code-server --extensions-dir /config/extensions --install-extension vscode-icons-team.vscode-icons
-# RUN code-server --extensions-dir /config/extensions --install-extension eamodio.gitlens
-# RUN code-server --extensions-dir /config/extensions --install-extension humao.rest-client
+# Visual Studio Code Extentions
+ENV VSCODE_USER /home/coder/.local/share/code-server/User
+ENV VSCODE_EXTENSIONS /home/coder/.local/share/code-server/extensions
 
-# RUN sudo mkdir -p /home/eno/.bin && \
-#     echo "export PATH=\"\$HOME/.local/bin:\$PATH\"" | sudo tee -a /home/eno/.bashrc > /dev/null
-
-# RUN mkdir -p ${VSCODE_USER} && echo "{\"java.home\":\"$(dirname /opt/jdk-*/bin/)\",\"maven.terminal.useJavaHome\":true, \"maven.executable.path\":\"/opt/apache-maven-${MAVEN_VERSION}/bin/mvn\",\"spring-boot.ls.java.home\":\"$(dirname /opt/jdk-*/bin/)\",\"files.exclude\":{\"**/.classpath\":true,\"**/.project\":true,\"**/.settings\":true,\"**/.factorypath\":true},\"redhat.telemetry.enabled\":false,\"java.server.launchMode\": \"Standard\"}" | jq . > ${VSCODE_USER}/settings.json
-# RUN echo 'for f in /etc/profile.d/*.sh;do source $f;done' | sudo tee -a /home/coder/.bashrc > /dev/null
-# RUN rm -f /home/coder/.wget-hsts
+RUN code-server --install-extension dracula-theme.theme-dracula
+RUN code-server --install-extension MS-CEINTL.vscode-language-pack-ja
+RUN code-server --install-extension vscode-icons-team.vscode-icons
+RUN code-server --install-extension eamodio.gitlens
+RUN code-server --install-extension humao.rest-client
 
 ADD ./config/User/settings.json /home/coder/.local/share/code-server/User/settings.json
+
+RUN sudo mkdir -p /home/coder/.bin && \
+    echo "export PATH=\"\$HOME/.local/bin:\$PATH\"" | sudo tee -a /home/coder/.bashrc > /dev/null
+RUN echo 'for f in /etc/profile.d/*.sh;do source $f;done' | sudo tee -a /home/coder/.bashrc > /dev/null
+RUN rm -f /home/coder/.wget-hsts
+
+ARG CODEUSER
+USER root
+RUN usermod -d /home/$CODEUSER -m coder
+RUN rm -rf /home/coder
+USER coder
+ENV DOCKER_USER $CODEUSER
+WORKDIR /home/$CODEUSER

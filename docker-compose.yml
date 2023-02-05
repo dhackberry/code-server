@@ -1,0 +1,13 @@
+version: "3.7"
+services:
+  code-server:
+    image: code-server:latest
+    container_name: code-server
+    hostname: code-server
+    build: 
+      context: .
+      args:
+        CODEUSER: $CODEUSER
+    ports:
+      - "8443:8443"
+    env_file: .env
