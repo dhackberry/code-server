@@ -27,11 +27,6 @@ spec:
     image: okteto.dev/code-server:latest
     ports:
     - containerPort: 8443
-    env:
-    - name: DEMO_GREETING
-      value: "Hello from the environment"
-    - name: DEMO_FAREWELL
-      value: "Such a sweet sorrow"
     envFrom:
     - secretRef:
         name: code-server-secret
