@@ -7,7 +7,7 @@ build:
 deploy:
   - envsubst < okteto/secret.template.env > okteto/secret.env
   - kubectl apply -k ./okteto
-  - okteto build -t okteto.dev/code-server:latest .
+  # - okteto build -t okteto.dev/code-server:latest .
   # - helm upgrade --install code-server helm-chart -f helm-chart/values.yaml --set image.repository=okteto.dev/code-server --set image.tag=latest
   - kubectl apply -f okteto/manifests
 
